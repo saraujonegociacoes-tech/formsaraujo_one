@@ -1,6 +1,12 @@
 # Credenciais locais — NÃO versionar
 config.js
 
+# Schema do banco (Supabase) — NÃO versionar
+db/
+
+# Documentação interna — NÃO versionar
+docs/
+
 # Sistema operacional
 Thumbs.db
 .DS_Store
@@ -13,3 +19,6 @@ desktop.ini
 
 # Logs
 *.log
+
+#claude
+.claude/

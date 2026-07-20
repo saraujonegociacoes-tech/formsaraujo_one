@@ -397,9 +397,18 @@ ul{list-style:none;}
             <label class="field-label">Telefone / WhatsApp</label>
             <div class="field-input-wrap" id="phoneWrap">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 005 5L14 13l5 2v3a2 2 0 01-2 2C9.5 20 4 14.5 4 8a2 2 0 012-2z"/></svg>
-              <input type="tel" id="phoneInput" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="numeric">
+              <input type="tel" id="phoneInput" placeholder="(00) 00000-0000" autocomplete="off" inputmode="numeric">
             </div>
             <div class="field-error" id="phoneError">Digite um telefone válido</div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Confirmar Telefone / WhatsApp</label>
+            <div class="field-input-wrap" id="phoneConfirmWrap">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 005 5L14 13l5 2v3a2 2 0 01-2 2C9.5 20 4 14.5 4 8a2 2 0 012-2z"/></svg>
+              <input type="tel" id="phoneConfirmInput" placeholder="Digite o número novamente" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" inputmode="numeric">
+            </div>
+            <div class="field-error" id="phoneConfirmError">Os números não coincidem</div>
           </div>
 
           <div style="flex:1"></div>
@@ -499,15 +508,33 @@ const phoneInput = document.getElementById('phoneInput');
 const phoneWrap = document.getElementById('phoneWrap');
 const phoneError = document.getElementById('phoneError');
 
+const phoneConfirmInput = document.getElementById('phoneConfirmInput');
+const phoneConfirmWrap = document.getElementById('phoneConfirmWrap');
+const phoneConfirmError = document.getElementById('phoneConfirmError');
+
 const submitBtn = document.getElementById('submitBtn');
 const step1Panel = document.getElementById('step-1');
 const successPanel = document.getElementById('step-3');
 
+const onlyDigits = v => v.replace(/\D/g,'');
+
+function maskPhone(value){
+  let v = onlyDigits(value).slice(0,11);
+  if(v.length>0){
+    if(v.length<=2){ v = '('+v; }
+    else if(v.length<=7){ v = '('+v.slice(0,2)+') '+v.slice(2); }
+    else { v = '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7); }
+  }
+  return v;
+}
+
 function checkFormValid(){
   const nameValid = nameInput.value.trim().length >= 3;
-  const digits = phoneInput.value.replace(/\D/g,'');
+  const digits = onlyDigits(phoneInput.value);
+  const confirmDigits = onlyDigits(phoneConfirmInput.value);
   const phoneValid = digits.length >= 10;
-  submitBtn.disabled = !(nameValid && phoneValid);
+  const confirmValid = confirmDigits.length >= 10 && digits === confirmDigits;
+  submitBtn.disabled = !(nameValid && phoneValid && confirmValid);
 }
 
 nameInput.addEventListener('input', ()=>{
@@ -520,30 +547,44 @@ nameInput.addEventListener('focus', ()=>nameWrap.classList.add('focus'));
 nameInput.addEventListener('blur', ()=>nameWrap.classList.remove('focus'));
 
 phoneInput.addEventListener('input', ()=>{
-  let v = phoneInput.value.replace(/\D/g,'').slice(0,11);
-  if(v.length>0){
-    if(v.length<=2){ v = '('+v; }
-    else if(v.length<=7){ v = '('+v.slice(0,2)+') '+v.slice(2); }
-    else { v = '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7); }
-  }
-  phoneInput.value = v;
-  const digits = phoneInput.value.replace(/\D/g,'');
+  phoneInput.value = maskPhone(phoneInput.value);
+  const digits = onlyDigits(phoneInput.value);
   phoneWrap.classList.toggle('valid', digits.length>=10);
   phoneError.classList.remove('show');
+  // se o telefone principal mudar, revalida a confirmação
+  const confirmDigits = onlyDigits(phoneConfirmInput.value);
+  phoneConfirmWrap.classList.toggle('valid', confirmDigits.length>=10 && confirmDigits===digits);
   checkFormValid();
 });
 phoneInput.addEventListener('focus', ()=>phoneWrap.classList.add('focus'));
 phoneInput.addEventListener('blur', ()=>phoneWrap.classList.remove('focus'));
 
+phoneConfirmInput.addEventListener('input', ()=>{
+  phoneConfirmInput.value = maskPhone(phoneConfirmInput.value);
+  const digits = onlyDigits(phoneInput.value);
+  const confirmDigits = onlyDigits(phoneConfirmInput.value);
+  phoneConfirmWrap.classList.toggle('valid', confirmDigits.length>=10 && confirmDigits===digits);
+  phoneConfirmError.classList.remove('show');
+  checkFormValid();
+});
+phoneConfirmInput.addEventListener('focus', ()=>phoneConfirmWrap.classList.add('focus'));
+phoneConfirmInput.addEventListener('blur', ()=>phoneConfirmWrap.classList.remove('focus'));
+// impede colar no campo de confirmação — obriga digitar de novo
+phoneConfirmInput.addEventListener('paste', e => e.preventDefault());
+phoneConfirmInput.addEventListener('drop', e => e.preventDefault());
+
 const submitError = document.getElementById('submitError');
 
 submitBtn.addEventListener('click', async ()=>{
   const nameValid = nameInput.value.trim().length >= 3;
-  const digits = phoneInput.value.replace(/\D/g,'');
+  const digits = onlyDigits(phoneInput.value);
+  const confirmDigits = onlyDigits(phoneConfirmInput.value);
   const phoneValid = digits.length >= 10;
+  const confirmValid = confirmDigits.length >= 10 && digits === confirmDigits;
   if(!nameValid){ nameError.classList.add('show'); nameWrap.style.borderColor = '#ff8a8a'; }
   if(!phoneValid){ phoneError.classList.add('show'); phoneWrap.style.borderColor = '#ff8a8a'; }
-  if(!nameValid || !phoneValid) return;
+  if(phoneValid && !confirmValid){ phoneConfirmError.classList.add('show'); phoneConfirmWrap.style.borderColor = '#ff8a8a'; }
+  if(!nameValid || !phoneValid || !confirmValid) return;
 
   // estado de carregamento
   submitError.classList.remove('show');

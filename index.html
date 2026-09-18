@@ -37,6 +37,20 @@ src="https://www.facebook.com/tr?id=1169043948488779&ev=PageView&noscript=1"
   --gray-dark:#111827;
   --border:#1F2937;
 
+  /* Superficie clara do formulario — marfim, nao branco puro.
+     Branco #FFF sobre fundo escuro e o que cansa a vista; estes
+     tons ficam em ~94-98% de luminancia e tiram o brilho. */
+  --surface-hi:#FBF9F5;
+  --surface:#F2EFE8;
+  --surface-lo:#EAE6DD;
+  --field:#FFFFFF;
+  --line:#DCD7CB;
+  --ink:#15181F;
+  --ink-soft:#5C6270;
+  --placeholder:#8B8478;
+  --gold-ink:#7E6115;
+  --danger:#B3261E;
+
   --radius-lg:20px;
   --radius-md:14px;
   --radius-sm:10px;
@@ -168,75 +182,82 @@ ul{list-style:none;}
 .benefit-title{font-size:14.5px;font-weight:600;color:var(--white);}
 .benefit-desc{font-size:13px;color:var(--gray-light);line-height:1.5;}
 
-/* ---------- FORM PANEL ---------- */
+/* ---------- FORM PANEL (superficie clara) ---------- */
 .form-region{
   display:flex;align-items:stretch;
   opacity:0;
 }
 
-
 .form-card{
   flex:1;
-  background:linear-gradient(160deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));
-  border:1px solid var(--border);
+  /* gradiente vertical sutil: papel iluminado de cima */
+  background:linear-gradient(168deg, var(--surface-hi) 0%, var(--surface) 55%, var(--surface-lo) 100%);
+  border:1px solid var(--line);
   border-radius:var(--radius-lg);
   padding:36px 38px;
   position:relative;
   overflow:hidden;
-  box-shadow:0 30px 80px -20px rgba(0,0,0,0.6);
+  /* sombra profunda para o cartao claro assentar sobre o fundo escuro */
+  box-shadow:
+    0 34px 80px -22px rgba(0,0,0,0.72),
+    0 2px 5px rgba(0,0,0,0.30);
   min-height:400px;
   display:flex;
   flex-direction:column;
+  color:var(--ink);
 }
 .form-card::before{
   content:'';position:absolute;top:-1px;left:8%;right:8%;height:1px;
-  background:linear-gradient(90deg, transparent, rgba(10,77,255,0.6), transparent);
+  background:linear-gradient(90deg, transparent, rgba(10,77,255,0.45), transparent);
 }
 .form-card::after{
   content:'';position:absolute;width:280px;height:280px;border-radius:50%;
-  background:radial-gradient(circle, rgba(10,77,255,0.12), transparent 70%);
+  background:radial-gradient(circle, rgba(10,77,255,0.07), transparent 70%);
   top:-100px;right:-100px;pointer-events:none;
 }
 
 .step-icon{
   width:52px;height:52px;border-radius:14px;
-  background:linear-gradient(150deg, rgba(10,77,255,0.18), rgba(10,77,255,0.05));
-  border:1px solid rgba(10,77,255,0.32);
-  display:flex;align-items:center;justify-content:center;color:var(--blue-hover);
+  background:linear-gradient(150deg, rgba(10,77,255,0.11), rgba(10,77,255,0.03));
+  border:1px solid rgba(10,77,255,0.22);
+  display:flex;align-items:center;justify-content:center;color:var(--blue);
   margin-bottom:20px;
 }
-.step-title{font-size:21px;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em;}
-.step-desc{font-size:14px;color:var(--gray-light);line-height:1.55;margin-bottom:26px;}
+.step-title{font-size:21px;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em;color:var(--ink);}
+.step-desc{font-size:14px;color:var(--ink-soft);line-height:1.55;margin-bottom:26px;}
 
 .field{margin-bottom:18px;}
 .field-label{
-  display:block;font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px;
+  display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;
 }
 .field-input-wrap{
   display:flex;align-items:center;gap:10px;
-  background:var(--gray-dark);
-  border:1.5px solid var(--border);
+  background:var(--field);
+  border:1.5px solid var(--line);
   border-radius:var(--radius-sm);
   padding:0 14px;
   height:52px;
   transition:border-color .25s var(--ease), box-shadow .25s var(--ease);
 }
-.field-input-wrap svg{color:var(--gray-light);flex-shrink:0;transition:color .25s var(--ease);}
+.field-input-wrap svg{color:var(--placeholder);flex-shrink:0;transition:color .25s var(--ease);}
+/* validado: ouro envelhecido, escuro o bastante para contrastar no claro */
+.field-input-wrap.valid{border-color:rgba(126,97,21,0.5);}
+.field-input-wrap.valid svg{color:var(--gold-ink);}
+/* foco vem DEPOIS de .valid de proposito: o indicador de foco precisa
+   vencer o estado de validado, senao o campo focado fica sem sinal claro */
 .field-input-wrap.focus{
   border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(10,77,255,0.15);
+  box-shadow:0 0 0 3px rgba(10,77,255,0.14);
 }
-.field-input-wrap.focus svg{color:var(--blue-hover);}
-.field-input-wrap.valid{border-color:rgba(212,175,55,0.5);}
-.field-input-wrap.valid svg{color:var(--gold);}
+.field-input-wrap.focus svg{color:var(--blue);}
 .field-input-wrap input{
   flex:1;background:none;border:none;outline:none;
-  color:var(--white);font-size:15px;font-weight:500;
+  color:var(--ink);font-size:15px;font-weight:500;
   height:100%;min-width:0;
 }
-.field-input-wrap input::placeholder{color:#5b6472;font-weight:400;}
+.field-input-wrap input::placeholder{color:var(--placeholder);font-weight:400;}
 .field-error{
-  font-size:12px;color:#ff8a8a;margin-top:7px;
+  font-size:12px;color:var(--danger);margin-top:7px;
   display:flex;align-items:center;gap:5px;
   height:0;overflow:hidden;opacity:0;
   transition:all .25s var(--ease);
@@ -250,26 +271,35 @@ ul{list-style:none;}
   font-size:14.5px;font-weight:700;letter-spacing:0.02em;
   display:flex;align-items:center;justify-content:center;gap:9px;
   transition:transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
-  box-shadow:0 10px 30px -8px rgba(10,77,255,0.5);
+  box-shadow:0 10px 24px -10px rgba(10,77,255,0.65);
   position:relative;
   overflow:hidden;
 }
 .btn-cta:hover{background:var(--blue-hover);transform:scale(1.03);}
 .btn-cta:active{transform:scale(0.99);}
-.btn-cta:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
-.btn-cta:disabled:hover{background:var(--blue);}
+/* inerte por cor solida, nao por opacity: sobre superficie clara o
+   opacity clareia o botao e some com o texto branco (1.2:1) */
+.btn-cta:disabled{
+  background:#DEDACF;
+  color:#5C5648;
+  box-shadow:none;
+  cursor:not-allowed;
+  transform:none;
+}
+.btn-cta:disabled:hover{background:#DEDACF;transform:none;}
+.btn-cta:disabled:hover svg{transform:none;}
 .btn-cta svg{transition:transform .2s var(--ease);}
 .btn-cta:hover svg{transform:translateX(3px);}
 .trust-icons{
   display:flex;align-items:center;justify-content:center;gap:22px;
   margin-top:20px;padding-top:18px;
-  border-top:1px solid var(--border);
+  border-top:1px solid var(--line);
 }
 .trust-icon-item{
   display:flex;align-items:center;gap:6px;
-  font-size:11px;font-weight:600;color:var(--gray-light);
+  font-size:11px;font-weight:600;color:var(--ink-soft);
 }
-.trust-icon-item svg{color:var(--gold);flex-shrink:0;}
+.trust-icon-item svg{color:var(--gold-ink);flex-shrink:0;}
 
 .step-panel{display:none;flex-direction:column;flex:1;}
 .step-panel.active{display:flex;animation:slideIn .4s var(--ease);}
@@ -286,10 +316,10 @@ ul{list-style:none;}
 .success-panel.active{display:flex;animation:slideIn .45s var(--ease);}
 .success-check{
   width:78px;height:78px;border-radius:50%;
-  background:radial-gradient(circle, rgba(212,175,55,0.18), rgba(212,175,55,0.04));
-  border:1.5px solid rgba(212,175,55,0.45);
+  background:radial-gradient(circle, rgba(126,97,21,0.13), rgba(126,97,21,0.03));
+  border:1.5px solid rgba(126,97,21,0.38);
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:22px;color:var(--gold);
+  margin-bottom:22px;color:var(--gold-ink);
   animation:popIn .55s var(--ease);
 }
 @keyframes popIn{
@@ -299,8 +329,8 @@ ul{list-style:none;}
 }
 .success-check svg{stroke-dasharray:24;stroke-dashoffset:24;animation:drawCheck .5s .25s var(--ease) forwards;}
 @keyframes drawCheck{to{stroke-dashoffset:0;}}
-.success-title{font-size:22px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em;}
-.success-desc{font-size:14px;color:var(--gray-light);line-height:1.6;max-width:320px;margin-bottom:0;}
+.success-title{font-size:22px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em;color:var(--ink);}
+.success-desc{font-size:14px;color:var(--ink-soft);line-height:1.6;max-width:320px;margin-bottom:0;}
 
 /* ---------- REVEAL ANIM ---------- */
 .reveal{opacity:0;transform:translateY(16px);}
@@ -478,8 +508,27 @@ ul{list-style:none;}
 <!-- Credenciais ficam em config.js (fora do git). Modelo em config.example.js -->
 <script src="config.js"></script>
 <script>
-// Credenciais vêm de config.js (window.SUPABASE_URL / window.SUPABASE_ANON_KEY)
-const sb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+// Credenciais vêm de config.js (window.SUPABASE_URL / window.SUPABASE_ANON_KEY).
+// A inicializacao nao pode derrubar a pagina: se config.js faltar ou o CDN do
+// Supabase nao carregar, o layout continua aparecendo e so o envio fica indisponivel.
+let sb = null;
+(function initSupabase(){
+  const url = window.SUPABASE_URL;
+  const key = window.SUPABASE_ANON_KEY;
+  if(typeof supabase === 'undefined'){
+    console.error('Supabase SDK nao carregou (CDN bloqueado ou sem internet).');
+    return;
+  }
+  if(!url || !key || url.indexOf('SEU-PROJETO') !== -1 || key.indexOf('SUA-ANON-KEY') !== -1){
+    console.error('config.js ausente ou com valores de exemplo. Copie config.example.js para config.js e preencha SUPABASE_URL / SUPABASE_ANON_KEY.');
+    return;
+  }
+  try{
+    sb = supabase.createClient(url, key);
+  }catch(err){
+    console.error('Falha ao criar o client do Supabase:', err);
+  }
+})();
 
 // ---------- reveal on load ----------
 document.querySelectorAll('.reveal').forEach((el,i)=>{
@@ -581,9 +630,9 @@ submitBtn.addEventListener('click', async ()=>{
   const confirmDigits = onlyDigits(phoneConfirmInput.value);
   const phoneValid = digits.length >= 10;
   const confirmValid = confirmDigits.length >= 10 && digits === confirmDigits;
-  if(!nameValid){ nameError.classList.add('show'); nameWrap.style.borderColor = '#ff8a8a'; }
-  if(!phoneValid){ phoneError.classList.add('show'); phoneWrap.style.borderColor = '#ff8a8a'; }
-  if(phoneValid && !confirmValid){ phoneConfirmError.classList.add('show'); phoneConfirmWrap.style.borderColor = '#ff8a8a'; }
+  if(!nameValid){ nameError.classList.add('show'); nameWrap.style.borderColor = 'var(--danger)'; }
+  if(!phoneValid){ phoneError.classList.add('show'); phoneWrap.style.borderColor = 'var(--danger)'; }
+  if(phoneValid && !confirmValid){ phoneConfirmError.classList.add('show'); phoneConfirmWrap.style.borderColor = 'var(--danger)'; }
   if(!nameValid || !phoneValid || !confirmValid) return;
 
   // estado de carregamento
@@ -593,6 +642,7 @@ submitBtn.addEventListener('click', async ()=>{
   submitBtn.innerHTML = 'ENVIANDO...';
 
   try{
+    if(!sb) throw new Error('Supabase nao configurado (config.js ausente ou invalido).');
     const { error } = await sb.from('leads').insert({
       nome: nameInput.value.trim(),
       telefone: phoneInput.value.trim()

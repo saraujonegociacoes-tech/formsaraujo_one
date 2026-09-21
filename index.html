@@ -332,6 +332,171 @@ ul{list-style:none;}
 .success-title{font-size:22px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em;color:var(--ink);}
 .success-desc{font-size:14px;color:var(--ink-soft);line-height:1.6;max-width:320px;margin-bottom:0;}
 
+/* ---------- ESCOLHAS DO PASSO 2 ---------- */
+/* Radio nativo escondido mas focavel: o cartao inteiro e o label,
+   entao o teclado continua navegando por setas como num radiogroup. */
+.choice-group{display:flex;flex-direction:column;gap:9px;}
+.choice{
+  display:flex;align-items:center;gap:11px;
+  position:relative;
+  background:var(--field);
+  border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);
+  padding:13px 14px;
+  cursor:pointer;
+  transition:border-color .2s var(--ease), background .2s var(--ease);
+}
+.choice:hover{border-color:rgba(10,77,255,0.35);}
+.choice input{position:absolute;opacity:0;width:0;height:0;}
+.choice-dot{
+  width:19px;height:19px;border-radius:50%;flex-shrink:0;
+  border:1.8px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .2s var(--ease);
+}
+.choice-dot::after{
+  content:'';width:9px;height:9px;border-radius:50%;
+  background:var(--blue);
+  transform:scale(0);
+  transition:transform .2s var(--ease);
+}
+.choice-text{font-size:14px;font-weight:500;color:var(--ink);line-height:1.4;}
+.choice input:checked ~ .choice-dot{border-color:var(--blue);}
+.choice input:checked ~ .choice-dot::after{transform:scale(1);}
+.choice:has(input:checked){
+  border-color:var(--blue);
+  background:rgba(10,77,255,0.045);
+}
+/* :has() e recente; sem ele o cartao nao pinta, mas o ponto azul
+   ainda marca a escolha — degrada sem quebrar. */
+.choice:has(input:focus-visible){
+  box-shadow:0 0 0 3px rgba(10,77,255,0.14);
+  border-color:var(--blue);
+}
+.choice-question{
+  font-size:13px;font-weight:600;color:var(--ink);
+  margin-bottom:9px;
+}
+.choice-block{margin-bottom:20px;}
+
+.btn-skip{
+  display:block;width:100%;text-align:center;
+  margin-top:12px;
+  font-size:12.5px;font-weight:600;color:var(--ink-soft);
+  padding:8px;border-radius:var(--radius-sm);
+  transition:color .2s var(--ease);
+}
+.btn-skip:hover{color:var(--blue);text-decoration:underline;}
+
+.step-progress{
+  font-size:11px;font-weight:700;letter-spacing:0.1em;
+  color:var(--gold-ink);text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+/* nota de privacidade dentro do cartao */
+.privacy-note{
+  font-size:11.5px;line-height:1.55;color:var(--ink-soft);
+  margin-top:14px;text-align:center;
+}
+.privacy-note a{color:var(--gold-ink);text-decoration:underline;}
+
+/* ---------- SECOES DE CONTEUDO ---------- */
+.section{padding:64px 0;border-top:1px solid var(--border);}
+.section-label{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11.5px;font-weight:700;letter-spacing:0.13em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:14px;
+}
+.section-title{
+  font-size:32px;font-weight:800;letter-spacing:-0.02em;
+  line-height:1.15;margin-bottom:12px;
+}
+.section-sub{
+  font-size:15.5px;color:var(--gray-light);line-height:1.6;
+  max-width:560px;margin-bottom:40px;
+}
+
+/* COMO FUNCIONA */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+.how-step{
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:26px 24px;
+  position:relative;
+}
+.how-num{
+  width:34px;height:34px;border-radius:9px;
+  background:rgba(10,77,255,0.12);
+  border:1px solid rgba(10,77,255,0.32);
+  color:var(--blue-hover);
+  font-size:14.5px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;
+}
+.how-title{font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;}
+.how-desc{font-size:13.5px;color:var(--gray-light);line-height:1.6;}
+
+/* DEPOIMENTOS */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start;}
+.tcard{
+  background:rgba(255,255,255,0.028);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:24px 22px;
+  display:flex;flex-direction:column;
+}
+.tcard-head{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
+.tavatar{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:var(--white);
+  background:linear-gradient(145deg, rgba(10,77,255,0.55), rgba(10,77,255,0.25));
+  border:1px solid rgba(10,77,255,0.4);
+}
+.tname{font-size:14px;font-weight:600;line-height:1.3;}
+.tmeta{font-size:11.5px;color:var(--gray-light);margin-top:2px;}
+.tstars{font-size:12.5px;color:var(--gold);letter-spacing:1px;margin-bottom:11px;}
+.tbody{font-size:13.5px;line-height:1.68;color:var(--gray-light);}
+.tbody strong{color:var(--white);font-weight:600;}
+.tnote{
+  font-size:11px;line-height:1.5;color:var(--gray-light);
+  margin-top:14px;padding-top:12px;
+  border-top:1px solid var(--border);
+  font-style:italic;
+}
+.tsource{
+  font-size:12px;color:var(--gray-light);
+  margin-top:24px;display:flex;align-items:center;gap:7px;
+}
+
+/* QUEM SOMOS */
+.about{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:34px 32px;
+}
+.about-text{font-size:14.5px;color:var(--gray-light);line-height:1.7;}
+.about-text strong{color:var(--white);font-weight:600;}
+.about-facts{display:flex;flex-direction:column;gap:12px;}
+.about-fact{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13.5px;color:var(--gray-light);line-height:1.5;
+}
+.about-fact svg{color:var(--gold);flex-shrink:0;margin-top:2px;}
+.about-fact b{color:var(--white);font-weight:600;}
+
+/* FOOTER extra */
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;}
+.footer-links a{
+  font-size:12.5px;color:var(--gray-light);
+  text-decoration:underline;text-underline-offset:3px;
+}
+.footer-links a:hover{color:var(--white);}
+
 /* ---------- REVEAL ANIM ---------- */
 .reveal{opacity:0;transform:translateY(16px);}
 .reveal.in{animation:revealUp .65s var(--ease) forwards;}
@@ -360,6 +525,12 @@ ul{list-style:none;}
   .form-card{padding:28px 22px;min-height:auto;}
   .footer{flex-direction:column;align-items:flex-start;}
   .trust-chip span{display:none;}
+  .section{padding:44px 0;}
+  .section-title{font-size:26px;}
+  .section-sub{font-size:14.5px;margin-bottom:28px;}
+  .how-grid{grid-template-columns:1fr;gap:16px;}
+  .tgrid{grid-template-columns:1fr;gap:16px;}
+  .about{grid-template-columns:1fr;gap:24px;padding:26px 22px;}
   .topbar{padding:20px 0 0;}
 }
 @media (max-width: 460px){
@@ -383,7 +554,7 @@ ul{list-style:none;}
       </div>
       <div>
         <div class="brand-name">Análise Segura</div>
-        <div class="brand-tag">Contratos · Juros · Direitos</div>
+        <div class="brand-tag">por Araújo Negociações</div>
       </div>
     </div>
     <div class="trust-chip">
@@ -399,8 +570,8 @@ ul{list-style:none;}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.5l7.5 3v5.7c0 5-3.2 8.4-7.5 10.3-4.3-1.9-7.5-5.3-7.5-10.3V5.5l7.5-3z"/></svg>
         ANÁLISE GRATUITA · SEM COMPROMISSO
       </div>
-      <h1 class="headline reveal" id="r2">Pare de pagar <span class="accent">juros abusivos</span> sem saber.</h1>
-      <p class="subheadline reveal" id="r3">Descubra gratuitamente se seu contrato possui cobranças acima do permitido e receba uma análise sem compromisso — em até 48 horas.</p>
+      <h1 class="headline reveal" id="r2">Seu financiamento pode estar cobrando <span class="accent">juros acima do permitido</span>.</h1>
+      <p class="subheadline reveal" id="r3">Descubra gratuitamente. Nossa equipe analisa as condições do seu contrato e retorna pelo WhatsApp em até 48 horas úteis — sem compromisso e sem custo.</p>
     </div>
 
     <!-- FORM REGION -->
@@ -444,9 +615,79 @@ ul{list-style:none;}
           <div style="flex:1"></div>
           <div class="field-error" id="submitError" style="justify-content:center;">Não foi possível enviar. Tente novamente.</div>
           <button class="btn-cta" id="submitBtn" disabled>
-            VERIFICAR POSSÍVEIS JUROS ABUSIVOS
+            FAZER ANÁLISE GRATUITA
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
+        </div>
+
+        <!-- PASSO 2 — QUALIFICACAO -->
+        <!-- So aparece depois que o contato ja foi gravado. Se a pessoa
+             abandonar aqui, o lead do passo 1 continua valendo. -->
+        <div class="step-panel" id="step-2">
+          <div class="step-progress">Passo 2 de 2</div>
+          <div class="step-title">Sobre o seu contrato</div>
+          <div class="step-desc">Três perguntas rápidas. Elas ajudam nossa equipe a preparar sua análise antes de entrar em contato.</div>
+
+          <div class="choice-block" role="radiogroup" aria-labelledby="q1-label">
+            <div class="choice-question" id="q1-label">Que tipo de contrato você possui?</div>
+            <div class="choice-group">
+              <label class="choice">
+                <input type="radio" name="tipoContrato" value="financiamento_veiculo">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Financiamento de veículo</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="tipoContrato" value="emprestimo">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Empréstimo</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="tipoContrato" value="outro">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Outro</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="choice-block" role="radiogroup" aria-labelledby="q2-label">
+            <div class="choice-question" id="q2-label">O contrato ainda está ativo?</div>
+            <div class="choice-group">
+              <label class="choice">
+                <input type="radio" name="contratoAtivo" value="sim">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Sim, ainda estou pagando</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="contratoAtivo" value="nao">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Não, já quitei</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="choice-block" role="radiogroup" aria-labelledby="q3-label">
+            <div class="choice-question" id="q3-label">Você tem uma cópia do contrato?</div>
+            <div class="choice-group">
+              <label class="choice">
+                <input type="radio" name="possuiContrato" value="sim">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Sim, tenho em mãos</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="possuiContrato" value="nao">
+                <span class="choice-dot"></span>
+                <span class="choice-text">Não tenho / não sei onde está</span>
+              </label>
+            </div>
+          </div>
+
+          <div style="flex:1"></div>
+          <div class="field-error" id="qualifyError" style="justify-content:center;">Não foi possível enviar. Tente novamente.</div>
+          <button class="btn-cta" id="qualifyBtn" disabled>
+            CONCLUIR
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="btn-skip" id="skipBtn" type="button">Prefiro responder isso pelo WhatsApp</button>
         </div>
 
         <!-- SUCCESS -->
@@ -468,14 +709,20 @@ ul{list-style:none;}
             Sem compromisso
           </div>
         </div>
+
+        <div class="privacy-note">
+          Seus dados são usados exclusivamente para entrar em contato sobre a sua
+          análise. Não vendemos, alugamos nem compartilhamos suas informações com
+          terceiros para fins comerciais.
+        </div>
       </div>
     </div>
 
     <div class="benefits reveal" id="r5">
       <div class="benefit">
         <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1"/><circle cx="10" cy="7" r="3.2"/><path d="M22 20v-1a3.8 3.8 0 00-3-3.7"/><path d="M16.5 3.5a3.2 3.2 0 010 6.3"/></svg></div>
-        <div class="benefit-title">+2.400 atendidos</div>
-        <div class="benefit-desc">Já descobriram cobranças abusivas com nossa análise.</div>
+        <div class="benefit-title">+2.400 análises realizadas</div>
+        <div class="benefit-desc">Contratos já avaliados pela nossa equipe.</div>
       </div>
       <div class="benefit">
         <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v5h5"/><path d="M6 3h8l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z"/><path d="M9 14h6M9 17h4"/></svg></div>
@@ -490,15 +737,174 @@ ul{list-style:none;}
     </div>
   </div>
 
+
+  <!-- COMO FUNCIONA -->
+  <div class="section" id="como-funciona">
+    <div class="section-label">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+      COMO FUNCIONA
+    </div>
+    <h2 class="section-title reveal">O que acontece depois do cadastro</h2>
+    <p class="section-sub reveal">Sem letras mi&uacute;das: estas s&atilde;o as tr&ecirc;s etapas, na ordem em que acontecem.</p>
+
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <div class="how-num">1</div>
+        <div class="how-title">Voc&ecirc; envia seus dados</div>
+        <div class="how-desc">Nome e WhatsApp no formul&aacute;rio acima. Em seguida, tr&ecirc;s perguntas r&aacute;pidas sobre o seu contrato &mdash; leva menos de um minuto.</div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">2</div>
+        <div class="how-title">Nossa equipe analisa</div>
+        <div class="how-desc">Verificamos as condi&ccedil;&otilde;es do financiamento e checamos se existem cobran&ccedil;as acima do que o contrato e a legisla&ccedil;&atilde;o permitem.</div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">3</div>
+        <div class="how-title">Voc&ecirc; recebe o retorno</div>
+        <div class="how-desc">Em at&eacute; 48 horas &uacute;teis um consultor entra em contato pelo WhatsApp informado e explica o que foi encontrado. Sem custo e sem compromisso.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPOIMENTOS -->
+  <div class="section" id="depoimentos">
+    <div class="section-label">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.6 5.5 6 .9-4.3 4.2 1 6-5.3-2.8L6.7 19.6l1-6L3.4 9.4l6-.9z" stroke-linejoin="round"/></svg>
+      QUEM J&Aacute; PASSOU POR ISSO
+    </div>
+    <h2 class="section-title reveal">Avalia&ccedil;&otilde;es de clientes</h2>
+    <p class="section-sub reveal">Trechos de avalia&ccedil;&otilde;es p&uacute;blicas deixadas no Google por clientes da Ara&uacute;jo Negocia&ccedil;&otilde;es.</p>
+
+    <div class="tgrid">
+
+      <div class="tcard reveal">
+        <div class="tcard-head">
+          <div class="tavatar">C</div>
+          <div>
+            <div class="tname">CL Dominike Dias</div>
+            <div class="tmeta">Rio Branco (AC)</div>
+          </div>
+        </div>
+        <div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="tbody">
+          &ldquo;No in&iacute;cio, fiquei um pouco apreensivo por conta do grande desconto e dos
+          juros abusivos que a Araujo Negocia&ccedil;&otilde;es me mostrou. Al&eacute;m disso, por
+          todo o atendimento ser feito por liga&ccedil;&atilde;o e WhatsApp,
+          <strong>pesquisei bastante na internet para ter certeza de que a empresa era
+          confi&aacute;vel</strong>. Hoje posso afirmar com seguran&ccedil;a que fiz a escolha
+          certa.&rdquo;
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="tcard-head">
+          <div class="tavatar">V</div>
+          <div>
+            <div class="tname">Vinicius da Luz Paulino</div>
+            <div class="tmeta">Cliente</div>
+          </div>
+        </div>
+        <div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="tbody">
+          &ldquo;Fui indicado pelo meu amigo Carlos. No in&iacute;cio fiquei apreensivo pq nem
+          tudo na internet &eacute; verdade, mas me arrisquei e &eacute; claro que me surpreendi.
+          Me apresentaram minuciosamente a empresa e todos os departamentos.
+          <strong>Indico a Ara&uacute;jo Negocia&ccedil;&otilde;es de olhos fechados.</strong>&rdquo;
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="tcard-head">
+          <div class="tavatar">N</div>
+          <div>
+            <div class="tname">Natan Almeida</div>
+            <div class="tmeta">Cliente desde 03/2024</div>
+          </div>
+        </div>
+        <div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="tbody">
+          &ldquo;Eu j&aacute; estava com um financiamento de ve&iacute;culo que pesava demais no
+          bolso: R$ 64.200,00 no total, com parcelas de R$ 1.520,00.
+          <strong>No come&ccedil;o, o processo foi bem lento</strong> &mdash; teve per&iacute;odos
+          em que n&atilde;o acontecia nada por semanas. Mas o pessoal da Ara&uacute;jo continuou
+          firme, sempre me explicando o que estava acontecendo. Em janeiro de 2025 recalcularam
+          tudo e <strong>consegui quitar a d&iacute;vida por R$ 24.700,00</strong>. N&atilde;o foi
+          um processo r&aacute;pido nem f&aacute;cil, exigiu paci&ecirc;ncia, mas no final
+          compensou muito.&rdquo;
+        </div>
+        <div class="tnote">
+          Resultado individual. Cada contrato &eacute; analisado caso a caso e o desfecho depende
+          da institui&ccedil;&atilde;o financeira, do tipo de contrato e da negocia&ccedil;&atilde;o.
+          N&atilde;o h&aacute; garantia de redu&ccedil;&atilde;o de valor nem de prazo.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tsource">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9"/></svg>
+      Avalia&ccedil;&otilde;es p&uacute;blicas, reproduzidas do perfil da Ara&uacute;jo Negocia&ccedil;&otilde;es no Google.
+    </div>
+  </div>
+
+  <!-- QUEM SOMOS -->
+  <div class="section" id="quem-somos">
+    <div class="section-label">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.5l7.5 3v5.7c0 5-3.2 8.4-7.5 10.3-4.3-1.9-7.5-5.3-7.5-10.3V5.5l7.5-3z"/></svg>
+      QUEM EST&Aacute; POR TR&Aacute;S
+    </div>
+    <h2 class="section-title reveal">Quem faz a sua an&aacute;lise</h2>
+    <p class="section-sub reveal">Voc&ecirc; n&atilde;o est&aacute; enviando seus dados para uma p&aacute;gina an&ocirc;nima.</p>
+
+    <div class="about reveal">
+      <div class="about-text">
+        <strong>An&aacute;lise Segura</strong> &eacute; a an&aacute;lise preliminar e gratuita de
+        contratos oferecida pela <strong>Ara&uacute;jo Negocia&ccedil;&otilde;es</strong>, empresa
+        especializada em revis&atilde;o e negocia&ccedil;&atilde;o de contratos de financiamento e
+        empr&eacute;stimo. O contato &eacute; feito por consultores da pr&oacute;pria equipe, por
+        liga&ccedil;&atilde;o e WhatsApp.
+      </div>
+      <div class="about-facts">
+        <div class="about-fact">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-5h6v5"/></svg>
+          <div><b>Ara&uacute;jo Negocia&ccedil;&otilde;es</b><br>CNPJ 43.882.465/0001-26</div>
+        </div>
+        <div class="about-fact">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2.5l7.5 3v5.7c0 5-3.2 8.4-7.5 10.3-4.3-1.9-7.5-5.3-7.5-10.3V5.5l7.5-3z"/></svg>
+          <div>Atendimento por consultores identificados, por liga&ccedil;&atilde;o e WhatsApp</div>
+        </div>
+        <div class="about-fact">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M14 3v5h5"/><path d="M6 3h8l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          <div>A an&aacute;lise preliminar &eacute; <b>gratuita</b> e n&atilde;o gera obriga&ccedil;&atilde;o de contratar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <div class="footer">
     <div class="footer-brand">
       <div class="brand-mark" style="width:34px;height:34px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.6"><path d="M12 2.5l7.5 3v5.7c0 5-3.2 8.4-7.5 10.3-4.3-1.9-7.5-5.3-7.5-10.3V5.5l7.5-3z"/></svg>
       </div>
-      <div class="footer-text">Análise Segura · Contratos, Juros e Direitos</div>
+      <div class="footer-text">An&aacute;lise Segura &middot; uma iniciativa da <b>Ara&uacute;jo Negocia&ccedil;&otilde;es</b></div>
     </div>
-    <div class="footer-text">© 2026 Análise Segura. Esta página não constitui aconselhamento jurídico definitivo. O diagnóstico é uma análise preliminar e gratuita.</div>
+    <div class="footer-links">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#depoimentos">Avalia&ccedil;&otilde;es</a>
+      <a href="#quem-somos">Quem somos</a>
+    </div>
+    <div class="footer-text" style="max-width:820px;">
+      &copy; 2026 Ara&uacute;jo Negocia&ccedil;&otilde;es &mdash; CNPJ 43.882.465/0001-26. Esta p&aacute;gina
+      n&atilde;o constitui aconselhamento jur&iacute;dico definitivo: o diagn&oacute;stico &eacute;
+      uma an&aacute;lise preliminar e gratuita, e o resultado de cada caso depende do contrato e da
+      institui&ccedil;&atilde;o financeira envolvida.<br><br>
+      <b>Privacidade:</b> os dados informados no formul&aacute;rio (nome e telefone) s&atilde;o
+      coletados apenas para que nossa equipe entre em contato a respeito da sua an&aacute;lise.
+      N&atilde;o s&atilde;o vendidos, alugados nem compartilhados com terceiros para fins
+      comerciais. Para solicitar a exclus&atilde;o dos seus dados, basta pedir ao consultor no
+      mesmo WhatsApp do atendimento.
+    </div>
   </div>
 
 </div>
@@ -531,7 +937,7 @@ let sb = null;
 })();
 
 // ---------- reveal on load ----------
-document.querySelectorAll('.reveal').forEach((el,i)=>{
+document.querySelectorAll('.hero .reveal').forEach((el,i)=>{
   setTimeout(()=>{ el.classList.add('in'); }, 120 + i*90);
 });
 
@@ -623,7 +1029,46 @@ phoneConfirmInput.addEventListener('paste', e => e.preventDefault());
 phoneConfirmInput.addEventListener('drop', e => e.preventDefault());
 
 const submitError = document.getElementById('submitError');
+const step2Panel = document.getElementById('step-2');
+const qualifyBtn = document.getElementById('qualifyBtn');
+const qualifyError = document.getElementById('qualifyError');
+const skipBtn = document.getElementById('skipBtn');
 
+// O id do lead nasce aqui, no navegador, e nao no banco. Motivo: a anon
+// key nao tem SELECT (de proposito), entao o insert nao devolve a linha
+// gravada. Sem o id em maos nao haveria como amarrar a qualificacao do
+// passo 2 ao contato do passo 1. Ver db/migrations/0002.
+function uuidv4(){
+  if(window.crypto && typeof crypto.randomUUID === 'function'){
+    return crypto.randomUUID();
+  }
+  // Fallback: crypto.randomUUID so existe em contexto seguro (https).
+  // Em http local, monta o v4 na mao — mesma fonte de entropia.
+  const b = new Uint8Array(16);
+  crypto.getRandomValues(b);
+  b[6] = (b[6] & 0x0f) | 0x40;  // versao 4
+  b[8] = (b[8] & 0x3f) | 0x80;  // variante RFC 4122
+  const h = Array.from(b, x => x.toString(16).padStart(2,'0'));
+  return h.slice(0,4).join('')  + '-' + h.slice(4,6).join('')   + '-' +
+         h.slice(6,8).join('')  + '-' + h.slice(8,10).join('')  + '-' +
+         h.slice(10,16).join('');
+}
+
+// Preenchido no passo 1; o passo 2 depende dele.
+let leadId = null;
+
+function track(evento, dados){
+  if(typeof fbq === 'function'){
+    try{ fbq('track', evento, dados); }catch(err){ /* pixel nunca derruba o funil */ }
+  }
+}
+function trackCustom(evento, dados){
+  if(typeof fbq === 'function'){
+    try{ fbq('trackCustom', evento, dados); }catch(err){}
+  }
+}
+
+// ---------- passo 1: contato ----------
 submitBtn.addEventListener('click', async ()=>{
   const nameValid = nameInput.value.trim().length >= 3;
   const digits = onlyDigits(phoneInput.value);
@@ -641,22 +1086,95 @@ submitBtn.addEventListener('click', async ()=>{
   const btnLabel = submitBtn.innerHTML;
   submitBtn.innerHTML = 'ENVIANDO...';
 
+  const novoId = uuidv4();
+
   try{
     if(!sb) throw new Error('Supabase nao configurado (config.js ausente ou invalido).');
     const { error } = await sb.from('leads').insert({
+      id: novoId,
       nome: nameInput.value.trim(),
       telefone: phoneInput.value.trim()
     });
     if(error) throw error;
 
+    // So agora o lead existe de fato — e o unico ponto em que o
+    // contato esta garantido. O passo 2 e ganho adicional.
+    leadId = novoId;
+    track('Lead');
+
     step1Panel.classList.remove('active');
-    successPanel.classList.add('active');
+    step2Panel.classList.add('active');
   }catch(err){
     console.error('Erro ao enviar lead:', err);
     submitError.classList.add('show');
     submitBtn.disabled = false;
     submitBtn.innerHTML = btnLabel;
   }
+});
+
+// ---------- passo 2: qualificacao ----------
+function respostaDe(nome){
+  const marcado = document.querySelector('input[name="' + nome + '"]:checked');
+  return marcado ? marcado.value : null;
+}
+
+function checkQualifyValid(){
+  qualifyBtn.disabled = !(
+    respostaDe('tipoContrato') &&
+    respostaDe('contratoAtivo') &&
+    respostaDe('possuiContrato')
+  );
+}
+
+document.querySelectorAll('.choice input[type="radio"]').forEach(radio=>{
+  radio.addEventListener('change', ()=>{
+    qualifyError.classList.remove('show');
+    checkQualifyValid();
+  });
+});
+
+function mostrarSucesso(){
+  step2Panel.classList.remove('active');
+  successPanel.classList.add('active');
+}
+
+qualifyBtn.addEventListener('click', async ()=>{
+  if(qualifyBtn.disabled) return;
+
+  qualifyError.classList.remove('show');
+  qualifyBtn.disabled = true;
+  const btnLabel = qualifyBtn.innerHTML;
+  qualifyBtn.innerHTML = 'ENVIANDO...';
+
+  try{
+    if(!sb) throw new Error('Supabase nao configurado.');
+    if(!leadId) throw new Error('Lead sem id — o passo 1 nao completou.');
+
+    const { error } = await sb.from('leads_qualificacao').insert({
+      lead_id: leadId,
+      tipo_contrato: respostaDe('tipoContrato'),
+      financiamento_ativo: respostaDe('contratoAtivo') === 'sim',
+      possui_contrato: respostaDe('possuiContrato') === 'sim'
+    });
+    if(error) throw error;
+
+    trackCustom('LeadQualificado', { tipo_contrato: respostaDe('tipoContrato') });
+    mostrarSucesso();
+  }catch(err){
+    console.error('Erro ao enviar qualificacao:', err);
+    // O contato ja esta salvo. Aqui so oferecemos nova tentativa —
+    // derrubar a pessoa para uma tela de erro seria punir o lead
+    // por uma etapa que e opcional.
+    qualifyError.classList.add('show');
+    qualifyBtn.disabled = false;
+    qualifyBtn.innerHTML = btnLabel;
+  }
+});
+
+// Pular e legitimo: o lead ja foi capturado no passo 1.
+skipBtn.addEventListener('click', ()=>{
+  trackCustom('QualificacaoPulada');
+  mostrarSucesso();
 });
 
 </script>

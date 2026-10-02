@@ -1189,9 +1189,21 @@ qualifyBtn.addEventListener('click', async ()=>{
   }
 });
 
-// Pular e legitimo: o lead ja foi capturado no passo 1.
-skipBtn.addEventListener('click', ()=>{
+// Pular e legitimo: o lead ja foi capturado no passo 1. O envio ao
+// Pipefy so acontece no fim do formulario, entao pular tambem precisa
+// avisar o banco. Se falhar, a pessoa segue igual — o contato ja esta
+// salvo e aparece no Supabase com enviado_pipefy_em vazio.
+skipBtn.addEventListener('click', async ()=>{
+  skipBtn.disabled = true;
   trackCustom('QualificacaoPulada');
+  try{
+    if(sb && leadId){
+      const { error } = await sb.rpc('pular_qualificacao', { p_id: leadId });
+      if(error) throw error;
+    }
+  }catch(err){
+    console.error('Erro ao enviar lead sem qualificacao:', err);
+  }
   mostrarSucesso();
 });
 

@@ -1029,8 +1029,8 @@ const skipBtn = document.getElementById('skipBtn');
 
 // O id do lead nasce aqui, no navegador, e nao no banco. Motivo: a anon
 // key nao tem SELECT (de proposito), entao o insert nao devolve a linha
-// gravada. Sem o id em maos nao haveria como amarrar a qualificacao do
-// passo 2 ao contato do passo 1. Ver db/migrations/0002.
+// gravada. Sem o id em maos o passo 2 nao saberia em qual linha gravar
+// as respostas. Ver db/migrations/0004.
 function uuidv4(){
   if(window.crypto && typeof crypto.randomUUID === 'function'){
     return crypto.randomUUID();
@@ -1083,7 +1083,7 @@ submitBtn.addEventListener('click', async ()=>{
 
   try{
     if(!sb) throw new Error('Supabase nao configurado (config.js ausente ou invalido).');
-    const { error } = await sb.from('leads').insert({
+    const { error } = await sb.from('leads_veiculo').insert({
       id: novoId,
       nome: nameInput.value.trim(),
       telefone: phoneInput.value.trim()
@@ -1166,11 +1166,13 @@ qualifyBtn.addEventListener('click', async ()=>{
     if(!sb) throw new Error('Supabase nao configurado.');
     if(!leadId) throw new Error('Lead sem id — o passo 1 nao completou.');
 
-    const { error } = await sb.from('leads_qualificacao').insert({
-      lead_id: leadId,
-      tipo_veiculo: respostaDe('tipoVeiculo'),
-      valor_parcela: valorParcela(),
-      em_atraso: respostaDe('situacaoParcelas') === 'em_atraso'
+    // Grava as respostas na mesma linha do contato. O anon nao tem
+    // UPDATE na tabela; a funcao so preenche respostas ainda vazias.
+    const { error } = await sb.rpc('qualificar_lead', {
+      p_id: leadId,
+      p_tipo_veiculo: respostaDe('tipoVeiculo'),
+      p_valor_parcela: valorParcela(),
+      p_em_atraso: respostaDe('situacaoParcelas') === 'em_atraso'
     });
     if(error) throw error;
 
